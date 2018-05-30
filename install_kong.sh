@@ -1,4 +1,5 @@
 docker run -d --name kong-database \
+              --restart=always \
               -p 5432:5432 \
               -e "POSTGRES_USER=kong" \
               -e "POSTGRES_DB=kong" \
@@ -12,6 +13,7 @@ docker run --rm \
     kong:latest kong migrations up
 sleep 3
 docker run -d --name kong \
+    --restart=always \
     --link kong-database:kong-database \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
